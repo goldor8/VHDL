@@ -1,0 +1,7 @@
+v 3
+file . ".\mytbbuffernbits.vhd" "20250318164656.000" "20250331083601.070":
+  entity mytbbuffernbits at 2( 29) + 0 on 93;
+  architecture mytbbuffernbits_arch of mytbbuffernbits at 12( 276) + 0 on 94;
+file . ".\mybuffernbits.vhd" "20250318165158.000" "20250331083601.022":
+  entity buffernbits at 2( 26) + 0 on 91;
+  architecture buffernbits_arch of buffernbits at 18( 334) + 0 on 92;

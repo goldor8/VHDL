@@ -1,0 +1,7 @@
+v 3
+file . ".\mytbcompdecompnbits_SA.vhd" "20250324164526.000" "20250324174533.957":
+  entity mycomptdecompnbitstestbench at 2( 29) + 0 on 21;
+  architecture mycomptdecompnbitstestbench_arch of mycomptdecompnbitstestbench at 11( 273) + 0 on 22;
+file . ".\mycompdecompnbits.vhd" "20250324161648.000" "20250324174533.931":
+  entity comptdecompnbits at 2( 26) + 0 on 19;
+  architecture comptdecompnbits_arch of comptdecompnbits at 18( 329) + 0 on 20;

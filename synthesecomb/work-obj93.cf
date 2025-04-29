@@ -1,0 +1,16 @@
+v 3
+file . ".\mytbsynthcomb.vhd" "20250318152742.000" "20250318172202.706":
+  entity mysynthcombtestbench at 2( 29) + 0 on 59;
+  architecture mysynthcombtestbench_arch of mysynthcombtestbench at 12( 286) + 0 on 60;
+file . ".\mysynthcomb.vhd" "20250310155832.000" "20250318172202.700":
+  entity synthcomb at 1( 0) + 0 on 57;
+  architecture synthcomb_arch of synthcomb at 18( 368) + 0 on 58;
+file . ".\mymuxnbits2to1.vhd" "20250310155408.000" "20250318172202.699":
+  entity muxnbits2vers1 at 2( 26) + 0 on 55;
+  architecture muxnbits2vers1_dataflow of muxnbits2vers1 at 17( 314) + 0 on 56;
+file . ".\myaddnbits.vhd" "20250306103258.000" "20250318172202.698":
+  entity addnbits at 2( 26) + 0 on 51;
+  architecture addnbits_dataflow of addnbits at 19( 374) + 0 on 52;
+file . ".\mymultnbits.vhd" "20250306103350.000" "20250318172202.699":
+  entity multiplynbits at 1( 0) + 0 on 53;
+  architecture multiplynbits_dataflow of multiplynbits at 16( 312) + 0 on 54;

@@ -1,0 +1,7 @@
+v 3
+file . ".\mymultnbits.vhd" "20250306103350.000" "20250306113352.815":
+  entity multiplynbits at 1( 0) + 0 on 23;
+  architecture multiplynbits_dataflow of multiplynbits at 16( 312) + 0 on 24;
+file . ".\mytbmultnbits.vhd" "20250306100128.000" "20250306113352.818":
+  entity mymultiplynbitstestbench at 1( 0) + 0 on 25;
+  architecture mymultiplynbitstestbench_arch of mymultiplynbitstestbench at 10( 179) + 0 on 26;
