@@ -1,6 +1,7 @@
 library IEEE;
 use IEEE.std_logic_1164.all;
 use IEEE.numeric_std.all;
+use IEEE.std_logic_signed.all;
 
 entity ALU is
     port(
@@ -70,21 +71,21 @@ begin
                 sr_out_l <= b(3);
                 sr_out_r <= '0';
             when "1100" => -- a + b with carry in from sr_in_r
-                a_var := a & (7 downto 4 => a(3));
-                b_var := b & (7 downto 4 => b(3));
-                c_in_var := sr_in_r & (7 downto 1 => '0');
+                a_var := (7 downto 4 => a(3)) & a;
+                b_var := (7 downto 4 => b(3)) & b;
+                c_in_var := (7 downto 1 => '0') & sr_in_r;
                 s <= a_var + b_var + c_in_var;
                 sr_out_l <= '0';
                 sr_out_r <= '0';
             when "1101" => -- a + b without carry
-                a_var := a & (7 downto 4 => a(3));
-                b_var := b & (7 downto 4 => b(3));
+                a_var := (7 downto 4 => a(3)) & a;
+                b_var := (7 downto 4 => b(3)) & b;
                 s <= a_var + b_var;
                 sr_out_l <= '0';
                 sr_out_r <= '0';
             when "1110" => -- a - b
-                a_var := a & (7 downto 4 => a(3));
-                b_var := b & (7 downto 4 => b(3));
+                a_var := (7 downto 4 => a(3)) & a;
+                b_var := (7 downto 4 => b(3)) & b;
                 s <= a_var - b_var;
                 sr_out_l <= '0';
                 sr_out_r <= '0';

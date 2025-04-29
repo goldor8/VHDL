@@ -1,1 +1,2 @@
-ghdl -a --std=08 --ieee=synopsys .\alu.vhd .\alutb.vhd
+/opt/ghdl/bin/ghdl -a --std=08 --ieee=synopsys ./alu.vhd ./alutb.vhd
+/opt/ghdl/bin/ghdl -e --std=08 --ieee=synopsys alu

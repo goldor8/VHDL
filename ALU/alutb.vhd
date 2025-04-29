@@ -1,5 +1,7 @@
 library IEEE;
 use IEEE.std_logic_1164.all;
+use IEEE.numeric_std.all;
+use IEEE.std_logic_signed.all;
 
 entity alutb is
 end alutb;
@@ -56,7 +58,10 @@ begin
         b_sim <= "0010"; -- b = 2
         sel_fct_sim <= "1101"; -- a + b
         wait for PERIOD;
-        assert (s_sim = "00000011" and sr_out_l_sim = '0' and sr_out_r_sim = '0') report "Test 2 failed" severity error;
+        assert (s_sim = "00000011" and sr_out_l_sim = '0' and sr_out_r_sim = '0') report "Test 2 failed, found : " & integer'image(to_integer(signed(s_sim))) & ", " & to_string(s_sim) severity error;
+        report "Test 2 passed, found : " & integer'image(to_integer(signed(s_sim))) & ", " & to_string(s_sim);
+
+        wait; -- Wait for the end of the simulation
     end process My_tb_Proc;
 end alutb_arch;
 
