@@ -124,7 +124,6 @@ INST_MEM : entity work.MEM_INSTRUCTIONS
 
 entity Routeur is
     Port (
-        clk            : in  std_logic;
         SEL_ROUTE      : in  std_logic_vector(3 downto 0);
         SEL_OUT      : in  std_logic_vector(1 downto 0);
 
