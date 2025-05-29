@@ -90,7 +90,7 @@ begin
                 sr_out_l <= '0';
                 sr_out_r <= '0';
             when "1111" => -- a * b
-                s <= std_logic_vector(signed(a_var) * signed(b_var));
+                s <= a * b;
                 sr_out_l <= '0';
                 sr_out_r <= '0';
             when others =>

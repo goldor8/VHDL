@@ -1,7 +1,7 @@
 library IEEE;
 use IEEE.std_logic_1164.all;
 
-entity Nbuffer is
+entity raiseNbuffer is
     generic(
         N : integer := 8
     );
@@ -14,9 +14,9 @@ entity Nbuffer is
     );
 end entity;
 
-architecture Nbuffer_arch of Nbuffer is
+architecture raiseNbuffer_arch of raiseNbuffer is
 begin
-    process(clk)
+    process(clk, reset)
     begin
         if reset = '1' then
             buffer_out <= (others => '0');

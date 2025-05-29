@@ -89,7 +89,7 @@ begin
         SEL_OUT <= "00"; -- output nothing
         wait for 20 ns;
 
-        SEL_FCT <= "1101"; -- no op
+        SEL_FCT <= "1101"; -- addition
         B_IN <= "0010"; -- b = 2
         SEL_ROUTE <= "0111"; -- store B_IN to buffer_b
         SEL_OUT <= "11"; -- output alu result

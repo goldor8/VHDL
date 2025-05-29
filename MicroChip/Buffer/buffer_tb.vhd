@@ -8,7 +8,7 @@ end buffer_tb;
 
 architecture buffer_tb_arch of buffer_tb is
     -- Déclaration du composant à tester
-    component Nbuffer is
+    component raiseNbuffer is
         generic(
             N : integer := 8
         );
@@ -30,7 +30,7 @@ architecture buffer_tb_arch of buffer_tb is
 
 begin
     
-    MyCache : Nbuffer
+    MyCache : raiseNbuffer
     generic map(
         N => 8
     )
