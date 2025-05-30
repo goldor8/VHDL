@@ -10,6 +10,7 @@ entity mem_instructions is
     port (
         clk         : in  std_logic;
         rst         : in  std_logic;
+        pc          : in  integer;
         instr_out   : out std_logic_vector(INSTR_WIDTH-1 downto 0)
     );
 end entity;
@@ -42,19 +43,7 @@ architecture mem_instructions_arch of mem_instructions is
         18 => "0110101011", -- MEM_CACHE_2 → Buffer_B, A OR B, sortie S
         others => (others => '0')
     );
-    signal pc : integer range 0 to MEM_DEPTH-1 := 0;
 begin
-
-    process(clk)
-    begin
-        if rising_edge(clk) then
-            if rst = '1' then
-                pc <= 0;
-            else
-                pc <= (pc + 1) mod MEM_DEPTH;
-            end if;
-        end if;
-    end process;
 
     instr_out <= memory(pc);
 
