@@ -18,32 +18,28 @@ architecture mem_instructions_arch of mem_instructions is
     type mem_type is array (0 to MEM_DEPTH-1) of std_logic_vector(INSTR_WIDTH-1 downto 0);
     signal memory : mem_type := (
         0 => "0000000000", --  A → Buffer_A
-        1 => "0000011100", --  B → Buffer_B 
-        2 => "1111000011", -- Multiplier et sortir S
+        1 => "1111011111", --  B → Buffer_B, Multiplier, sortie S
 
         -- (A+B) xnor A
-        3 => "0000000000", --  A_IN → Buffer_A
-        4 => "0000011100", --  B_IN → Buffer_B
-        5 => "1101111000", -- A+B sans retenue,  S → MEM_CACHE_1
-        6 => "0000100000", -- NOP, MEM_CACHE_1 → Buffer_B
-        7 => "0111111100", -- A xor B,  S → MEM_CACHE_2
-        8 => "0000001100", -- NOP, MEM_CACHE_2 → Buffer_A
-        9 => "0011000011", -- not A (A=Buffer_A), sortie S
+        2 => "0000000000", --  A_IN → Buffer_A
+        3 => "1101011100", --  B_IN → Buffer_B, A+B sans retenue
+        4 => "0000111000", -- nop,  S → MEM_CACHE_1
+        5 => "0111100000", -- A xor B, MEM_CACHE_1 → Buffer_B
+        6 => "0000111100", -- NOP,  S → MEM_CACHE_2
+        7 => "0011001111", -- not A, MEM_CACHE_2 → Buffer_A, sortie S
 
        -- (A0 and B1) or (A1 and B0)
-
-        10 => "0000000000", --  A_IN → Buffer_A
-        11 => "0000011100", --  B_IN → Buffer_B
-        12 => "1010111000", -- right shift B,  S → MEM_CACHE_1
-        13 => "0000100000", -- NOP, MEM_CACHE_1 → Buffer_B
-        14 => "0101111000", -- A and B,  S → MEM_CACHE_1
-        15 => "0000011100", --  B_IN → Buffer_B
-        16 => "1000111100", -- right shift A,  S → MEM_CACHE_2
-        17 => "0000000100", -- NOP, MEM_CACHE_2 → Buffer_A
-        18 => "0101111100", -- A and B,  S → MEM_CACHE_2
-        19 => "0000000100", -- NOP, MEM_CACHE_1 → Buffer_A
-        20 => "0000101000", -- NOP, MEM_CACHE_2 → Buffer_B
-        21 => "0110000011", -- A OR B, sortie S
+        8 => "0000000000", -- A_IN → Buffer_A
+        9 => "1010011100", -- B_IN → Buffer_B, right shift B
+        10 => "0000111000", -- S → MEM_CACHE_1, NOP
+        11 => "0101100000", -- MEM_CACHE_1 → Buffer_B, A and B
+        12 => "0000111000", -- S → MEM_CACHE_1, NOP
+        13 => "1000011100", -- B_IN → Buffer_B, right shift A,
+        14 => "0000111100", -- S → MEM_CACHE_2, NOP
+        15 => "0101000100", -- MEM_CACHE_2 → Buffer_A, A and B
+        16 => "0000111100", -- S → MEM_CACHE_2, NOP
+        17 => "0000000100", -- MEM_CACHE_1 → Buffer_A, NOP
+        18 => "0110101011", -- MEM_CACHE_2 → Buffer_B, A OR B, sortie S
         others => (others => '0')
     );
     signal pc : integer range 0 to MEM_DEPTH-1 := 0;

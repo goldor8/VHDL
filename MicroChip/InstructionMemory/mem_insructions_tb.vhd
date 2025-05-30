@@ -114,16 +114,16 @@ begin
         A_IN_sim <= "0011"; -- 3
         B_IN_sim <= "0010"; -- 2
 
-        wait for 3 * PERIOD_CLK; -- wait for A * B instructions
+        wait for 2 * PERIOD_CLK; -- wait for A * B instructions
         report "RES_OUT = " & integer'image(to_integer(unsigned(RES_OUT_sim)));
         assert RES_OUT_sim = std_logic_vector(to_unsigned(6,8))
-            report "Erreur multiplication" severity failure;
+            report "Erreur multiplication" severity error;
 
         
         A_IN_sim <= "0101"; -- 5
         B_IN_sim <= "0011"; -- 3
         
-        wait for 7 * PERIOD_CLK; -- wait for (A+B xnor A) instructions
+        wait for 6 * PERIOD_CLK; -- wait for (A+B xnor A) instructions
         report "RES_OUT (A+B xnor A) = " & integer'image(to_integer(unsigned(RES_OUT_sim)));
         assert RES_OUT_sim = "00000010"
             report "Erreur A+B xnor A" severity error;
@@ -132,7 +132,7 @@ begin
         A_IN_sim <= "0101"; -- 5
         B_IN_sim <= "0011"; -- 3
 
-        wait for 12 * PERIOD_CLK; -- wait for (A0 and B1) or (A1 and B0) instructions
+        wait for 11 * PERIOD_CLK; -- wait for (A0 and B1) or (A1 and B0) instructions
         report "RES_OUT (A0 and B1) or (A1 and B0) = " & std_logic'image(RES_OUT_sim(0));
         assert RES_OUT_sim(0) = '1'
             report "Erreur A0 and B1 or A1 and B0" severity error;

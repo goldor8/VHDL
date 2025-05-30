@@ -76,7 +76,6 @@ architecture alu_router_arch of alu_router is
 
     signal alu_sel_fct : std_logic_vector(3 downto 0);
     signal sel_out_mem : std_logic_vector(1 downto 0);
-    signal sel_route_mem : std_logic_vector(3 downto 0);
 begin
     BUFFER_A : raiseNbuffer
     generic map(
@@ -174,18 +173,6 @@ begin
         enable => '1'  -- Always enabled for function selection
     );
 
-    MEM_SEL_ROUTE : raiseNbuffer
-    generic map(
-        N => 4
-    )
-    port map(
-        clk => clk,
-        reset => reset,
-        buffer_in => SEL_ROUTE,
-        buffer_out => sel_route_mem,
-        enable => '1'  -- Always enabled for route selection
-    );
-
     MEM_SEL_OUT : raiseNbuffer
     generic map(
         N => 2
@@ -198,7 +185,7 @@ begin
         enable => '1'  -- Always enabled for output selection
     );
 
-    process(sel_route_mem, A_IN, B_IN, alu_out, mem_cache1_out, mem_cache2_out)
+    process(SEL_ROUTE, A_IN, B_IN, alu_out, mem_cache1_out, mem_cache2_out)
     begin
         cache_1_enable <= '0';
         cache_2_enable <= '0';
@@ -209,7 +196,7 @@ begin
         mem_cache1_in <= (others => '0');
         mem_cache2_in <= (others => '0');
 
-        case sel_route_mem is
+        case SEL_ROUTE is
                 when "0000" =>  -- A_IN → Buffer_A
                     buffer_a_enable <= '1';
                     buffer_a_in <= A_IN;
