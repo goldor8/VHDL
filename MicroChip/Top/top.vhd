@@ -122,27 +122,87 @@ begin
             enable => enable_result_mem
         );
 
-    led(3 downto 0) <= result_buffer_out(7 downto 4);
-    led3_r <= result_buffer_out(3);
-    led2_r <= result_buffer_out(2);
-    led1_r <= result_buffer_out(1);
-    led0_r <= result_buffer_out(0);
-    
-    process(all_reset)
-    begin
-        alu_mem_reset <= all_reset;
-    end process;
+    led(3 downto 0) <= result_buffer_out(3 downto 0);
+    led3_r <= result_buffer_out(7);
+    led2_r <= result_buffer_out(6);
+    led1_r <= result_buffer_out(5);
+    led0_r <= result_buffer_out(4);
 
     process(CLK100MHZ)
     begin
         if rising_edge(CLK100MHZ) then
             all_reset <= btn(0);
+            alu_mem_reset <= all_reset;
             if all_reset = '1' then
                 current_state <= IDLE;
                 led2_g <= '0';
                 led3_g <= '0';
                 led3_b <= '0';
             end if;
+            
+            led0_b <= '1';
+            case current_state is
+                when IDLE =>
+                    led3_b <= '1';
+                    if btn(1) = '1' then
+                        current_state <= FUNC1;
+                        pc <= 0;
+                    elsif btn(2) = '1' then
+                        current_state <= FUNC2;
+                        pc <= 2;
+                    elsif btn(3) = '1' then
+                        current_state <= FUNC3;
+                        pc <= 8;
+                    end if;
+                when FUNC1 =>
+                    led2_g <= '1';
+                    led3_g <= '0';
+                    led3_b <= '0';
+                    
+                    if pc = 1 then
+                     enable_result_mem <= '1';
+                    end if;
+                    
+                    if pc = 2 then
+                        enable_result_mem <= '0';
+                        current_state <= IDLE; -- Return to IDLE after FUNC1
+                        led3_g <= '1';
+                    end if;
+                    
+                    pc <= pc + 1;
+        
+                when FUNC2 =>
+                    led3_g <= '0';
+                    led3_b <= '0';
+                    if pc = 7 then
+                     enable_result_mem <= '1';
+                    end if;
+                    
+                    if pc = 8 then
+                        enable_result_mem <= '0';
+                        current_state <= IDLE; -- Return to IDLE after FUNC1
+                        led3_g <= '1';
+                    end if;
+                    
+                    pc <= pc + 1;
+        
+                when FUNC3 =>
+                    led3_g <= '0';
+                    led3_b <= '0';
+                    if pc = 18 then
+                     enable_result_mem <= '1';
+                    end if;
+                    
+                    if pc = 19 then
+                        enable_result_mem <= '0';
+                        current_state <= IDLE; -- Return to IDLE after FUNC1
+                        led3_g <= '1';
+                    end if;
+                    
+                    pc <= pc + 1;
+                when others =>
+                    current_state <= IDLE;
+            end case;
         end if;
     end process;
 
@@ -155,93 +215,11 @@ begin
         SEL_OUT_sim   <= instr_sim(1 downto 0);
     end process;
     
-    process(current_state)
-    begin
-        case current_state is
-                when IDLE =>
-                        led(0) <= '1';
-                when FUNC1 =>
-                        led(1) <= '1';
-                when FUNC2 =>
-                        led(2) <= '1';
-                when FUNC3 =>
-                        led(3) <= '1';
-         end case;
-    end process;
-    
     
     process(CLK100MHZ)
     begin
         if rising_edge(CLK100MHZ) then
-        led0_b <= '1';
-            case current_state is
-                when IDLE =>
-                    led3_b <= '1';
-                    if btn(1) = '1' then
-                        alu_mem_reset <= '1';
-                        current_state <= FUNC1;
-                        pc <= 0;
-                    elsif btn(2) = '1' then
-                        alu_mem_reset <= '1';
-                        current_state <= FUNC2;
-                        pc <= 2;
-                    elsif btn(3) = '1' then
-                        alu_mem_reset <= '1';
-                        current_state <= FUNC3;
-                        pc <= 8;
-                    end if;
-                when FUNC1 =>
-                    alu_mem_reset <= '0';
-                    led2_g <= '1';
-                    led3_g <= '0';
-                    led3_b <= '0';
-                    
-                    if pc = 0 then
-                     enable_result_mem <= '1';
-                    end if;
-                    
-                    if pc = 1 then
-                        enable_result_mem <= '0';
-                        current_state <= IDLE; -- Return to IDLE after FUNC1
-                        led3_g <= '1';
-                    end if;
-                    
-                    pc <= pc + 1;
         
-                when FUNC2 =>
-                    alu_mem_reset <= '0';
-                    led3_g <= '0';
-                    led3_b <= '0';
-                    if pc = 6 then
-                     enable_result_mem <= '1';
-                    end if;
-                    
-                    if pc = 7 then
-                        enable_result_mem <= '0';
-                        current_state <= IDLE; -- Return to IDLE after FUNC1
-                        led3_g <= '1';
-                    end if;
-                    
-                    pc <= pc + 1;
-        
-                when FUNC3 =>
-                    alu_mem_reset <= '0';
-                    led3_g <= '0';
-                    led3_b <= '0';
-                    if pc = 8 then
-                     enable_result_mem <= '1';
-                    end if;
-                    
-                    if pc = 18 then
-                        enable_result_mem <= '0';
-                        current_state <= IDLE; -- Return to IDLE after FUNC1
-                        led3_g <= '1';
-                    end if;
-                    
-                    pc <= pc + 1;
-                when others =>
-                    current_state <= IDLE;
-            end case;
          end if;
     end process;
 end architecture;
