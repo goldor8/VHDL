@@ -35,8 +35,7 @@ architecture mem_instructions_tb_arch of mem_instructions_tb is
             MEM_DEPTH   : integer := 128
         );
         port (
-            clk         : in  std_logic;
-            rst         : in  std_logic;
+            pc          : in  integer;
             instr_out   : out std_logic_vector(INSTR_WIDTH-1 downto 0)
         );
     end component;
@@ -54,6 +53,8 @@ architecture mem_instructions_tb_arch of mem_instructions_tb is
     signal SR_IN_L_sim, SR_IN_R_sim : std_logic := '0';
     signal RES_OUT_sim : std_logic_vector(7 downto 0);
     signal SR_OUT_L_sim, SR_OUT_R_sim : std_logic;
+
+    signal pc : integer := 0;
 begin
 
     ALU_ROUTER_INST : alu_router
@@ -74,8 +75,7 @@ begin
 
     MEM_INSTRUCTIONS_INST : mem_instructions
         port map (
-            clk => clk_sim,
-            rst => reset_sim,
+            pc => pc,
             instr_out => instr_sim
         );
     
@@ -101,6 +101,14 @@ begin
         SEL_ROUTE_sim <= instr_sim(5 downto 2);
         SEL_OUT_sim   <= instr_sim(1 downto 0);
     end process;
+
+    process(clk_sim)
+    begin
+        if falling_edge(clk_sim) then
+            pc += 1;
+        end if;
+    end process;
+
 
     -- ==========================================================================
     -- Séquence de test

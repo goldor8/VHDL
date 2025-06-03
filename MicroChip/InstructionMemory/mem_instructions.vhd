@@ -8,8 +8,6 @@ entity mem_instructions is
         MEM_DEPTH   : integer := 128
     );
     port (
-        clk         : in  std_logic;
-        rst         : in  std_logic;
         pc          : in  integer;
         instr_out   : out std_logic_vector(INSTR_WIDTH-1 downto 0)
     );
